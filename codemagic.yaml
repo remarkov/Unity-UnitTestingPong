@@ -32,16 +32,15 @@ workflows:
         vars:
           UNITY_BIN: C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Unity.exe
       scripts:
-        - sleep 7200
         - name: Activate License
-          script: cmd.exe /c "%UNITY_BIN%" -batchmode -quit -logFile -serial %UNITY_SERIAL% -username %UNITY_USERNAME% -password %UNITY_PASSWORD%
+          script: '& $Env:UNITY_BIN -batchmode -quit -serial $Env:UNITY_SERIAL -username $Env:UNITY_USERNAME -password $Env:UNITY_PASSWORD -logFile activate.log | powershell -Command "& {Get-Content activate.log -Wait}"'
         - name: Run Unit Tests
-          script: cmd.exe /c "%UNITY_BIN%" -batchmode -executeMethod Runner.RunUnitTests -logFile -nographics -projectPath .
+          script: '& $Env:UNITY_BIN -batchmode -projectPath . -executeMethod Runner.RunUnitTests -nographics -logFile test.log | powershell -Command "& {Get-Content test.log -Wait}"'
         - name: Build
-          script: cmd.exe /c "%UNITY_BIN%" -batchmode -quit -logFile -projectPath . -executeMethod BuildScript.BuildWindows -nographics
+          script: '& $Env:UNITY_BIN -batchmode -quit -projectPath . -executeMethod BuildScript.BuildWindows -nographics -logFile build.log | powershell -Command "& {Get-Content build.log -Wait}"'
       artifacts:
         - "Build/UnitTestingPong.exe"
       publishing:
         scripts:
           - name: Deactivate License
-            script: cmd.exe /c "%UNITY_BIN%" -batchmode -quit -returnlicense -nographics
+            script: '& $Env:UNITY_BIN -batchmode -quit -returnlicense -nographics -logFile deactivate.log | powershell -Command "& {Get-Content deactivate.log -Wait}"'
