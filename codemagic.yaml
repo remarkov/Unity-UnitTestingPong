@@ -33,14 +33,14 @@ workflows:
           UNITY_BIN: C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Unity.exe
       scripts:
         - name: Activate License
-          script: '& $Env:UNITY_BIN -batchmode -quit -serial $Env:UNITY_SERIAL -username $Env:UNITY_USERNAME -password $Env:UNITY_PASSWORD -logFile -'
+          script: powershell -Command "& $Env:UNITY_BIN -batchmode -quit -serial $Env:UNITY_SERIAL -username $Env:UNITY_USERNAME -password $Env:UNITY_PASSWORD -logFile -" -Wait
         - name: Run Unit Tests
-          script: '& $Env:UNITY_BIN -batchmode -projectPath . -executeMethod Runner.RunUnitTests -nographics -logFile test.log -'
+          script: powershell -Command "& $Env:UNITY_BIN -batchmode -projectPath . -executeMethod Runner.RunUnitTests -nographics -logFile test.log -" -Wait
         - name: Build
-          script: '& $Env:UNITY_BIN -batchmode -quit -projectPath . -executeMethod BuildScript.BuildWindows -nographics -logFile -'
+          script: powershell -Command "& $Env:UNITY_BIN -batchmode -quit -projectPath . -executeMethod BuildScript.BuildWindows -nographics -logFile -" -Wait
       artifacts:
         - "Build/UnitTestingPong.exe"
       publishing:
         scripts:
           - name: Deactivate License
-            script: '& $Env:UNITY_BIN -batchmode -quit -returnlicense -nographics -logFile -'
+            script: powershell -Command "& $Env:UNITY_BIN -batchmode -quit -returnlicense -nographics -logFile -" -Wait
