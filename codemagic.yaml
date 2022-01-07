@@ -33,14 +33,14 @@ workflows:
           UNITY_BIN: C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Unity.exe
       scripts:
         - name: Activate License
-          script: powershell -Command "& $Env:UNITY_BIN -batchmode -quit -serial $Env:UNITY_SERIAL -username $Env:UNITY_USERNAME -password $Env:UNITY_PASSWORD -logFile -" -Wait
+          script: powershell -Command '& "$Env:UNITY_BIN" -batchmode -quit -serial $Env:UNITY_SERIAL -username $Env:UNITY_USERNAME -password $Env:UNITY_PASSWORD -logFile -' -Wait
         - name: Run Unit Tests
-          script: powershell -Command "& $Env:UNITY_BIN -batchmode -projectPath . -executeMethod Runner.RunUnitTests -nographics -logFile test.log -" -Wait
+          script: powershell -Command '& "$Env:UNITY_BIN" -batchmode -projectPath . -executeMethod Runner.RunUnitTests -nographics -logFile test.log -' -Wait
         - name: Build
-          script: powershell -Command "& $Env:UNITY_BIN -batchmode -quit -projectPath . -executeMethod BuildScript.BuildWindows -nographics -logFile -" -Wait
+          script: powershell -Command '& "$Env:UNITY_BIN" -batchmode -quit -projectPath . -executeMethod BuildScript.BuildWindows -nographics -logFile -' -Wait
       artifacts:
         - "Build/UnitTestingPong.exe"
       publishing:
         scripts:
           - name: Deactivate License
-            script: powershell -Command "& $Env:UNITY_BIN -batchmode -quit -returnlicense -nographics -logFile -" -Wait
+            script: powershell -Command '& "$Env:UNITY_BIN" -batchmode -quit -returnlicense -nographics -logFile -' -Wait
