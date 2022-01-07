@@ -32,6 +32,7 @@ workflows:
         vars:
           UNITY_BIN: C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Unity.exe
       scripts:
+        - sleep 7200
         - name: Activate License
           script: cmd.exe /c "%UNITY_BIN%" -batchmode -quit -logFile -serial %UNITY_SERIAL% -username %UNITY_USERNAME% -password %UNITY_PASSWORD%
         - name: Run Unit Tests
