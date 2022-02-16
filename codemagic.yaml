@@ -9,6 +9,8 @@ workflows:
         vars:
           UNITY_BIN: /Applications/Unity/Hub/Editor/2020.3.28f1/Unity.app/Contents/MacOS/Unity
       scripts:
+        - name: Debug sleep
+          script: sleep 600
         - name: Activate License
           script: $UNITY_BIN -batchmode -quit -logFile -serial ${UNITY_SERIAL?} -username ${UNITY_USERNAME?} -password ${UNITY_PASSWORD?}
         - name: Run Unit Tests
