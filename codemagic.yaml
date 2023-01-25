@@ -3,6 +3,7 @@ workflows:
       # Building Unity on macOS requires special instance type which is available upon request
       name: Unity Mac Workflow
       environment:
+        instance_type: mac_pro
         groups:
           # Add the group environment variables in Codemagic UI (either in Application/Team variables) - https://docs.codemagic.io/variables/environment-variable-groups/
           - unity # <-- (Includes UNITY_SERIAL, UNITY_USERNAME, UNITY_PASSWORD)
